@@ -1,0 +1,3 @@
+CREATE TABLE Items (
+    ID INT PRIMARY KEY
+);
