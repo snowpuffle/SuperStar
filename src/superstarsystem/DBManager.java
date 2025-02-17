@@ -21,89 +21,74 @@ public class DBManager {
 
 	// Default Class Constructor
 	public DBManager() {
+
 		// Load the MySQL JDBC Driver
-		loadJDBCDriver();
+		loadClassJDBCDriver();
 
-		// Establish Connection with Database
-		connection = establishConnection();
+		// Connect to the MySQL
+		connection = connectToMySQL();
 
-		try {
-			// Handle Successful Connection
-			connection = handleSuccessfulConnection(connection);
+		// Connect to Database
+		connection = connectToDatabase(connection);
 
-			// Reset Database
-			resetDatabase(connection.createStatement(), "create_items.sql", "Items Re/Generated!");
-
-		} catch (IOException e) {
-			handleMessage(2, "IOException Occurred during Database Handling!");
-			e.printStackTrace();
-		} catch (SQLException e) {
-			handleMessage(2, "SQLException Occurred during Database Connection Handling!");
-			e.printStackTrace();
-		}
+		// Drop and Create Table
+		dropTable(connection, "items".toUpperCase());
+		createTable(connection, "create_items.sql", "Items".toUpperCase());
 	}
 
-	// Load the MySQL JDBC Driver
-	private static void loadJDBCDriver() {
+	// Load JDBC Driver Class
+	private static void loadClassJDBCDriver() {
 		try {
+			// Load the MySQL JDBC Driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
+
 		} catch (ClassNotFoundException e) {
-			handleMessage(2, "MySQL JDBC Driver NOT Found. Check JAR!");
-			// e.printStackTrace();
+			handleMessage(2, "MySQL JDBC Driver NOT Found - Check JAR!");
+			e.printStackTrace();
 		}
 	}
 
-	// Establish a Connection to Database
-	private static Connection establishConnection() {
-		Connection connection = null;
+	// Establish Connection to MySQL
+	private static Connection connectToMySQL() {
 		try {
-			connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			handleMessage(1, "Established Connection with MySQL!");
+			// Connect to MySQL
+			Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+			// handleMessage(1, "Established Connection with MySQL!");
+			return connection;
+
 		} catch (SQLException e) {
-			handleMessage(2, "Cannot Establish Connection");
+			handleMessage(2, "Cannot Establish Connection with MySQL!");
 			e.printStackTrace();
 		}
-		return connection;
+		return null;
 	}
 
 	// Check if Database Exists. Otherwise, Create a New Database.
-	private static Connection handleSuccessfulConnection(Connection connection) throws SQLException {
+	private static Connection connectToDatabase(Connection connection) {
+
 		// Check if the Database Exists or Not.
 		if (checkDatabaseExistence(connection)) {
-			// handleMessage(3, "Database Found! Resetting Database...");
-			dropAndCreateDatabase(connection);
+			// handleMessage(3, "Database '" + DATABASE_NAME.toUpperCase() + "' Found!");
 		} else {
 			// Create the Database if it Does NOT Exist.
-			// handleMessage(3, "Database NOT Found! Creating Database...");
+			handleMessage(3, "Database NOT Found! Creating Database...");
 			connection = createDatabase(connection);
-			// handleMessage(1, "Database Created!");
+			handleMessage(1, "Database Created!");
 		}
 
-		// Set the Active Database and Reset
+		// Set the Active Database
 		setActiveDatabase(connection);
 		return connection;
 	}
 
-	// Drops and recreates the database
-	private static void dropAndCreateDatabase(Connection connection) throws SQLException {
-		connection = dropDatabase(connection); // Drop the existing database
-		// handleMessage(1, "Database Dropped!");
-		connection = createDatabase(connection); // Create a new one
-		// handleMessage(1, "Database Created!");
-	}
-
-	// Sets the active database to the correct one
-	private static void setActiveDatabase(Connection connection) throws SQLException {
-		Statement statement = connection.createStatement();
-		statement.execute("USE " + DATABASE_NAME);
-	}
-
 	// Create New Database
 	private static Connection createDatabase(Connection connection) {
-		String createDatabaseSQL = "CREATE DATABASE " + DATABASE_NAME;
 		try {
+			// Execute Statement to Create Database
+			String createDatabaseSQL = "CREATE DATABASE " + DATABASE_NAME;
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(createDatabaseSQL);
+
 		} catch (SQLException e) {
 			handleMessage(2, "Cannot Create Database!");
 			e.printStackTrace();
@@ -111,55 +96,82 @@ public class DBManager {
 		return connection;
 	}
 
-	// Delete Database
-	private static Connection dropDatabase(Connection connection) {
-		String dropDatabaseSQL = "DROP DATABASE " + DATABASE_NAME;
-		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate(dropDatabaseSQL);
+	// Drop Table if Exists
+	private static void dropTable(Connection connection, String tableName) {
+		try {
+			// Execute Statement to Drop Table if Table Exists
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+			// handleMessage(1, "'" + tableName + "' Dropped if Existed!");
+
 		} catch (SQLException e) {
-			handleMessage(2, "Cannot Drop Database!");
+			handleMessage(2, "SQLException Occurred Dropping Table '" + tableName + "'!");
+			e.printStackTrace();
 		}
-		return connection;
 	}
 
-	// Reset Database
-	public static void resetDatabase(Statement statement, String fileName, String successMessage)
-			throws IOException, SQLException {
-		// Initialize File Location
-		String fileLocation = System.getProperty("user.dir") + "\\resources\\scripts\\" + fileName;
+	// Initialize and Set Table Database
+	private static void createTable(Connection connection, String fileName, String tableName) {
+		try {
+			// Initialize File Location
+			String fileLocation = System.getProperty("user.dir") + "\\resources\\scripts\\" + fileName;
 
-		// Read the SQL Script to Create SQL Table
-		File file = new File(fileLocation);
-		InputStream inputStream = new FileInputStream(file);
-		String SQL = new String(inputStream.readAllBytes());
-		inputStream.close();
+			// Read the SQL Script to Create SQL Table
+			File file = new File(fileLocation);
+			InputStream inputStream = new FileInputStream(file);
+			String SQL = new String(inputStream.readAllBytes());
+			inputStream.close();
 
-		// Execute the SQL Script
-		statement.executeUpdate(SQL);
-		handleMessage(1, successMessage);
+			// Execute Statement to Create & Initialize Table
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(SQL);
+			handleMessage(1, "Table '" + tableName + "' Set!");
+
+		} catch (SQLException e) {
+			handleMessage(2, "SQLException Occurred Initializing Table '" + tableName + "'!");
+			e.printStackTrace();
+
+		} catch (IOException e) {
+			handleMessage(2, "IOException Occurred Initializing Table '" + tableName + "'!");
+			e.printStackTrace();
+		}
 	}
 
 	// Check if Database Exists
 	private static boolean checkDatabaseExistence(Connection connection) {
-		// SQL Query to check if the Database Schema Exists.
-		String checkDatabaseSQL = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '"
-				+ DATABASE_NAME + "'";
-
 		// Variable to Store if the Database Exists
 		boolean exists = false;
 
 		try {
-			// Create a Statement Object and Execute the Query
+			// Execute Statement to Query Database Existence
+			String checkDatabaseSQL = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '"
+					+ DATABASE_NAME + "'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(checkDatabaseSQL);
 
 			// If the Result Set Contains ANY Rows, the Database Exists.
 			exists = resultSet.next();
+
 		} catch (SQLException e) {
 			handleMessage(2, "SQL Query Error in Checking for Database Existence.");
 			e.printStackTrace();
 		}
 		return exists;
+	}
+
+	// Helper method to set the active database
+	private static void setActiveDatabase(Connection connection) {
+		try {
+			// Execute Statement to Connect to Active Database
+			handleMessage(3, "Connecting to Database ...");
+			Statement statement = connection.createStatement();
+			statement.execute("USE " + DATABASE_NAME);
+			handleMessage(1, "Connected to '" + DATABASE_NAME.toUpperCase() + "' Database!");
+
+		} catch (SQLException e) {
+			handleMessage(2, "SQLException Occurred Setting Active Database!");
+			e.printStackTrace();
+		}
 	}
 
 	// Handle Messages Given Message Type
