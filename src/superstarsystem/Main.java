@@ -1,6 +1,7 @@
 package superstarsystem;
 
-import models.Model;
+import controller.Controller;
+import views.View;
 
 // import superstarsystem.DBManager;
 
@@ -8,16 +9,17 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// Establish Database Connection & Handle Initialization
-		DBManager dbManager = new DBManager();
+		try {
+			// Initialize Database Manager
+			DBManager dbManager = new DBManager();
 
-		Model model = new Model(dbManager);
+			// Initialize Controller
+			Controller controller = new Controller(dbManager);
 
-		// Create ItemDAO to Perform CRUD Operations on Items
-		// ItemDAO itemDAO = new ItemDAO(dbManager);
-
-		//
-		// Model model = new Model(itemDAO);
+		} catch (Exception e) {
+			System.out.println("An error occurred while starting the Supermarket System:");
+			e.printStackTrace();
+		}
 
 	}
 }

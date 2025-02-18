@@ -27,52 +27,47 @@ public class ItemDAO {
 	// Get All Items from Database
 	public List<Item> getAllItems() {
 
-		// Initialize Empty Product List
+		// Initialize Empty List
 		List<Item> listOfItems = new ArrayList<>();
 
-		// Initialize SQL Components
-		PreparedStatement statement = null;
-		ResultSet results = null;
-
-		// Attempt to Get All Animals from Database
 		try {
-			// Prepare Statement and Set Values
-			statement = connection.prepareStatement(GET_ALL_ITEMS);
+			// Prepare SQL Statement
+			PreparedStatement statement = connection.prepareStatement(GET_ALL_ITEMS);
 
-			// Execute Statement and Handle Results
-			results = statement.executeQuery();
+			// Execute Statement & Handle Results
+			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				Item item = addItemFromResultSet(results);
 				listOfItems.add(item);
 			}
+
 		} catch (SQLException e) {
-			System.out.println("ERROR ITEMDAO: Cannot Get Items! " + e);
+			System.out.println("ERROR: Cannot Get Items!");
 		}
 
-		// Return List of Products
+		// Return List of Items
 		return listOfItems;
 	}
 
 	// Get Product By ID From Database
 	public Item getItemByID(int ID) {
-		// Initialize Empty Item & SQL Components
-		Item item = null;
-		PreparedStatement statement = null;
-		ResultSet results = null;
 
-		// Attempt to Get Item from Database
+		// Initialize Item
+		Item item = null;
+
 		try {
-			// Prepare Statement and Set Values
-			statement = connection.prepareStatement(GET_ITEM_BY_ID);
+			// Prepare SQL Statement
+			PreparedStatement statement = connection.prepareStatement(GET_ITEM_BY_ID);
 			statement.setInt(1, ID);
 
-			// Execute Statement and Handle Results
-			results = statement.executeQuery();
+			// Execute Statement & Handle Results
+			ResultSet results = statement.executeQuery();
 			if (results.next()) {
 				item = addItemFromResultSet(results);
 			}
+
 		} catch (SQLException e) {
-			System.out.println("ERROR ITEMDAO: Cannot Get Item by ID! " + e);
+			System.out.println("ERROR: Cannot Get Item by ID!");
 		}
 
 		// Return Item
@@ -82,14 +77,12 @@ public class ItemDAO {
 	// Add Item to Database
 	public boolean addItem(Item item) {
 
-		// Initialize Flag & SQL Component
-		boolean success = true;
-		PreparedStatement statement = null;
+		// Initialize Flag
+		boolean success = false;
 
-		// Attempt to Add Item to Database
 		try {
-			// Prepare Statement with the SQL Query
-			statement = connection.prepareStatement(ADD_ITEM);
+			// Prepare SQL Statement
+			PreparedStatement statement = connection.prepareStatement(ADD_ITEM);
 			statement.setInt(1, item.getID());
 			statement.setDouble(2, item.getPrice());
 			statement.setString(3, item.getName());
@@ -99,22 +92,76 @@ public class ItemDAO {
 
 			// Execute Statement
 			statement.executeUpdate();
+			success = true;
+
 		} catch (SQLException e) {
-			success = false;
-			System.out.println("ERROR ITEMDAO: Cannot Add Item! " + e);
+			System.out.println("ERROR: Cannot Add Item!");
 		}
 		// Return Flag
 		return success;
 	}
 
-	// Get Product From Result Set
+	// Edit / Update Item in Database
+	public boolean editItem(Item item) {
+
+		// Initialize Flag
+		boolean success = false;
+
+		try {
+			// Prepare SQL Statement
+			PreparedStatement statement = connection.prepareStatement(UPDATE_ITEM);
+			statement.setInt(1, item.getQuantity());
+			statement.setDouble(2, item.getPrice());
+			statement.setString(3, item.getStatus());
+			statement.setInt(4, item.getID());
+
+			// Execute Statement & Handle Results
+			int rowsUpdated = statement.executeUpdate();
+			if (rowsUpdated > 0) {
+				success = true;
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR: Cannot Update Item!");
+		}
+
+		// Return Flag
+		return success;
+	}
+
+	// Delete Item from Database
+	public boolean deleteItem(Item item) {
+
+		// Initialize Flag
+		boolean success = false;
+
+		try {
+			// Prepare SQL Statement
+			PreparedStatement statement = connection.prepareStatement(DELETE_ITEM);
+			statement.setInt(1, item.getID());
+
+			// Execute Statement & Handle Results
+			int rowsDeleted = statement.executeUpdate();
+			if (rowsDeleted > 0) {
+				success = true;
+			}
+
+		} catch (SQLException e) {
+			System.out.println("ERROR: Cannot Delete Item!");
+		}
+
+		// Return Flag
+		return success;
+	}
+
+	// Get Item From Result Set
 	private Item addItemFromResultSet(ResultSet results) {
 
-		// Initialize Empty Item
+		// Initialize Item
 		Item item = null;
 
-		// Attempt to Extract Item Attributes from ResultSet
 		try {
+			// Extract Item Attributes from ResultSet
 			int ID = results.getInt("ID");
 			double price = results.getDouble("Price");
 			String name = results.getString("Name");
@@ -124,12 +171,12 @@ public class ItemDAO {
 
 			// Create a New Item Object
 			item = new Item(ID, price, name, type, quantity, status);
+
 		} catch (SQLException e) {
-			System.out.println("ERROR ITEMDAO: Cannot Extract Items Attributes from ResultSet! " + e);
+			System.out.println("ERROR: Cannot Extract Items Attributes from ResultSet!");
 		}
 
 		// Return Item
 		return item;
 	}
-
 }
