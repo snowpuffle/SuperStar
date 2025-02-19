@@ -14,7 +14,7 @@ public class Main {
 			DBManager dbManager = new DBManager();
 
 			// Initialize Controller
-			Controller controller = new Controller(dbManager);
+			new Controller(dbManager);
 
 		} catch (Exception e) {
 			System.out.println("An error occurred while starting the Supermarket System:");

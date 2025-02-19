@@ -33,8 +33,8 @@ public class DBManager {
 		connection = connectToDatabase(connection);
 
 		// Drop & Create Table
-		// dropTable(connection, "Items");
-		// createTable(connection, "create_items.sql", "Items");
+		dropTable(connection, "Items");
+		createTable(connection, "create_items.sql", "Items");
 
 	}
 
@@ -55,7 +55,7 @@ public class DBManager {
 		try {
 			// Connect to MySQL
 			Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-			System.out.println("SUCCESS: Established Connection with MySQL!");
+			// System.out.println("SUCCESS: Established Connection with MySQL!");
 			return connection;
 
 		} catch (SQLException e) {
@@ -70,12 +70,13 @@ public class DBManager {
 
 		// Check if the Database Exists.
 		if (checkDatabaseExistence(connection)) {
-			System.out.println("INFO: Database '" + DATABASE_NAME.toUpperCase() + "' Found!");
+			// System.out.println("INFO: Database '" + DATABASE_NAME.toUpperCase() + "'
+			// Found!");
 		} else {
 			// Create the Database if it NOT Already Exist.
-			System.out.println("INFO: Database NOT Found! Creating Database...");
+			// System.out.println("INFO: Database NOT Found! Creating Database...");
 			connection = createDatabase(connection);
-			System.out.println("SUCCESS: Database Created.");
+			// System.out.println("SUCCESS: Database Created.");
 		}
 
 		// Set the Active Database
@@ -134,7 +135,8 @@ public class DBManager {
 			// Execute Statement to Create & Initialize Table
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(SQL);
-			System.out.println("SUCCESS: Table '" + tableName.toUpperCase() + "' Created!");
+			// System.out.println("SUCCESS: Table '" + tableName.toUpperCase() + "'
+			// Created!");
 
 		} catch (Exception e) {
 			System.out.println("ERROR: Cannot Create '" + tableName.toUpperCase() + "' Table!");
@@ -148,7 +150,7 @@ public class DBManager {
 			// Execute Statement to Drop Table if Table Exists
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-			System.out.println("SUCCESS: '" + tableName + "' Dropped if Existed!");
+			// System.out.println("SUCCESS: '" + tableName + "' Dropped if Existed!");
 
 		} catch (SQLException e) {
 			System.out.println("ERROR: SQLException Occurred Dropping Table '" + tableName + "'!");

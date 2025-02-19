@@ -38,9 +38,9 @@ public class Model {
 			for (Item item : randomSeeds) {
 				itemDAO.addItem(item);
 			}
-			System.out.println("Database Seeded with Random Items.");
+			// System.out.println("Database Seeded with Random Items.");
 		} else {
-			System.out.println("Database Already Contains Data - Skipping Seeding.");
+			// System.out.println("Database Already Contains Data - Skipping Seeding.");
 		}
 	}
 
