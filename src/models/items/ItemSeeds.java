@@ -8,7 +8,7 @@ public class ItemSeeds {
 	private static Random random = new Random();
 
 	// Product Attributes
-	private static String[] TYPES = { "FRUITS", "VEGGIES" };
+	private static String[] TYPES = { "FRUITS", "VEGETABLES" };
 	private static String[] STATUS = { "AVAILABLE", "NOT AVAILABLE" };
 
 	private static String[] FRUIT_NAMES = { "Apple Delight", "Banana Bliss", "Charming Cherries", "Golden Pineapple",
@@ -18,7 +18,7 @@ public class ItemSeeds {
 			"Dragonfruit Dream", "Vibrant Pomegranate", "Cranberry Crisp", "Lively Limes", "Raspberry Bliss",
 			"Juicy Nectarines", "Cantaloupe Carnival", "Passionfruit Punch", "Exotic Guava" };
 
-	private static String[] VEGGIE_NAMES = { "Crisp Lettuce", "Hearty Spinach", "Golden Carrots", "Fresh Broccoli",
+	private static String[] VEGETABLE_NAMES = { "Crisp Lettuce", "Hearty Spinach", "Golden Carrots", "Fresh Broccoli",
 			"Sweet Corn", "Zucchini Delight", "Bell Pepper Medley", "Garden Cucumbers", "Savory Cauliflower",
 			"Spicy Jalapeños", "Tender Green Beans", "Plump Tomatoes", "Earthy Beets", "Rich Butternut Squash",
 			"Golden Potatoes", "Ruby Red Radishes", "Vibrant Eggplant", "Garlic Cloves", "Peppery Arugula",
@@ -74,8 +74,8 @@ public class ItemSeeds {
 		String name = "";
 		if ("FRUITS".equalsIgnoreCase(type)) {
 			name = FRUIT_NAMES[random.nextInt(FRUIT_NAMES.length)];
-		} else if ("VEGGIES".equalsIgnoreCase(type)) {
-			name = VEGGIE_NAMES[random.nextInt(VEGGIE_NAMES.length)];
+		} else if ("VEGETABLES".equalsIgnoreCase(type)) {
+			name = VEGETABLE_NAMES[random.nextInt(VEGETABLE_NAMES.length)];
 		}
 		return name;
 	}

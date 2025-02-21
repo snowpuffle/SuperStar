@@ -1,5 +1,9 @@
 package models.items;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Item {
 
 	// Item Attributes
@@ -9,6 +13,10 @@ public class Item {
 	private String type;
 	private int quantity;
 	private String status;
+
+	public Item() {
+
+	}
 
 	// Default Class Constructor
 	public Item(int ID, double price, String name, String type, int quantity, String status) {
@@ -73,6 +81,15 @@ public class Item {
 	public String toString() {
 		return "ID: " + this.ID + "\tPrice: " + this.price + "\tName: " + this.name + "\tType: " + this.type
 				+ "\tQuantity: " + this.quantity + "\tStatus: " + this.status;
+	}
+
+	public enum ItemType {
+		FRUITS, VEGETABLES
+	}
+
+	public static List<String> getItemTypeOptions() {
+		// Convert Each ENUM Constant to its Name (string)
+		return Arrays.stream(ItemType.values()).map(Enum::name).collect(Collectors.toList());
 	}
 
 }

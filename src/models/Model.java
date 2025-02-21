@@ -17,12 +17,6 @@ public class Model {
 
 		// Seed the Database with Random Seeds
 		generateSeeds(itemDAO);
-
-		// Retrieve all items from the database
-		List<Item> items = itemDAO.getAllItems();
-
-		// Display all items
-		// displayItems(items);
 	}
 
 	// Seed the Database
@@ -48,8 +42,12 @@ public class Model {
 		return itemDAO.getAllItems();
 	}
 
-	public void addItem(Item item) {
-		itemDAO.addItem(item);
+	public boolean addItem(Item item) {
+		return itemDAO.addItem(item);
+	}
+
+	public boolean editItem(Item item) {
+		return itemDAO.editItem(item);
 	}
 
 	public Item getItemByID(int ID) {

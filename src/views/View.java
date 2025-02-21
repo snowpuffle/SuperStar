@@ -8,111 +8,158 @@ import java.util.Scanner;
 
 public class View {
 	private Controller controller;
-	private Scanner scanner;
+	private ViewHelper viewHelper;
+	private ViewFormatter viewFormatter;
 
+	// Default Class Controller
 	public View(Controller controller) {
-		this.scanner = new Scanner(System.in);
 		this.controller = controller;
+		this.viewFormatter = new ViewFormatter();
+		this.viewHelper = new ViewHelper(viewFormatter);
 	}
 
 	// Display the Main Menu and Handle User Input
 	public void start() {
 
-		displayMenu();
-		int choice = getUserChoice();
+		// Start the Program Until User Exits
+		while (true) {
 
-		switch (choice) {
-		case 1 -> viewAllItems();
-		case 0 -> {
-			System.out.println("Goodbye!");
-		}
-		default -> System.out.println("ERROR: Invalid Choice.");
+			// Display Main Menu
+			displayMenu();
+
+			// Get User Input
+			int choice = viewHelper.getUserChoice();
+
+			// Handle User Input
+			switch (choice) {
+			case 1 -> controller.viewAllItems();
+			case 2 -> addNewItem();
+			case 3 -> editExistingItem();
+			case 4 -> editExistingItem();
+			case 0 -> {
+				System.out.println("Goodbye!");
+				return;
+			}
+			default -> viewFormatter.printFormattedErrorMessage("Invalid Choice. Please Try Again!");
+			}
 		}
 	}
 
 	// Display the main menu
 	private void displayMenu() {
-		System.out.println();
-		System.out.println("-".repeat(40));
-		System.out.println(formatTextWithPadding(" SUPERSTAR SYSTEM "));
-		System.out.println("-".repeat(40));
-		System.out.println("  << MAIN MENU >>");
-		System.out.println("  1. View All Items");
-		System.out.println("-".repeat(40));
-		System.out.print("> Enter Selection: ");
+
+		// Initialize Formatting Spacing
+		int spacing = 80;
+
+		// Print Formatted Menu Header
+		viewFormatter.printFormattedHeader("SUPERSTAR SYSTEM MAIN MENU", spacing);
+
+		// List All Menu Options
+		viewFormatter.printFormattedMenuOption("[1] Display All Items in Database", spacing);
+		viewFormatter.printFormattedMenuOption("[2] Add a New Item to Database", spacing);
+		viewFormatter.printFormattedMenuOption("[3] Edit an Existing Item by ID", spacing);
+		viewFormatter.printFormattedMenuOption("[4] Delete an Existing Item by ID", spacing);
+		viewFormatter.printFormattedMenuOption("[0] Exit the Program", spacing);
+
+		// Print Menu Divider
+		viewFormatter.printFormattedMenuDivider(spacing);
+
+		// Get User Input
+		viewFormatter.printFormattedPrompt("Enter Selection: ");
 	}
 
-	// Get User Choice from the Main Menu
-	private int getUserChoice() {
-		try {
-			return Integer.parseInt(scanner.nextLine());
-		} catch (NumberFormatException e) {
-			return -1; // Invalid Input
-		}
-	}
-
-	// Feature: View all items
-	private void viewAllItems() {
-		controller.viewAllItems();
-	}
-
-	// Display the List of Items
+	// Handle Display the List of All Items
 	public void displayAllItems(List<Item> listOfItems) {
 
-		// Print the Formatted Table Header
-		System.out.println();
-		printFormattedTableHeader();
+		// Initialize Formatting Spacing
+		int spacing = 94;
 
-		// Print Formatted Table Row
-		printFormattedTableRow(listOfItems);
-		printFormattedTableDivider();
-	}
+		// Print the Formatted Header
+		viewFormatter.printFormattedHeader("DISPLAY ALL ITEMS ", spacing);
+		viewFormatter.printFormattedTableHeader();
 
-	// Print Formatted Table Header
-	private void printFormattedTableHeader() {
-		printFormattedTableDivider();
-		System.out.printf("| %-6s | %-8s | %-28s | %-8s | %-8s | %-15s |\n", "ID", "Price", "Item Name", "Type",
-				"Quantity", "Status");
-		printFormattedTableDivider();
-	}
-
-	// Print Formatted Table Row
-	private void printFormattedTableRow(List<Item> listOfItems) {
-
-		// Print Each Item's Info in Row with 'X' Spaces Reserved
+		// Print Formatted Table Rows
 		for (Item item : listOfItems) {
-			System.out.printf("| %-6d | %-8.2f | %-28s | %-8s | %-8d | %-15s |\n", item.getID(), item.getPrice(),
-					item.getName(), item.getType(), item.getQuantity(), item.getStatus());
+			viewFormatter.printFormattedTableRow(item);
+		}
+		viewFormatter.printFormattedTableDivider();
+	}
+
+	// Handle Add New Item to Database
+	private void addNewItem() {
+
+		// Initialize Formatting Spacing
+		int spacing = 80;
+
+		// Print the Formatted Header
+		System.out.println();
+		viewFormatter.printFormattedHeader("ADD NEW ITEM", spacing);
+
+		// Validate each input using helper methods
+		double price = viewHelper.validateDoubleInput("Price", "Enter Item's Price: $", 0.00, 100.00);
+		String name = viewHelper.validateStringInput("Name", "Enter Item's Name: ");
+		String type = viewHelper.validateListOfOptions("Type", "Enter Item's Type: ", Item.getItemTypeOptions());
+		int quantity = viewHelper.validateIntegerInput("Quantity", "Enter Item's Quantity: ", 0, 50);
+
+		// Send User Input to Controller
+		boolean success = controller.addNewItem(price, name, type, quantity);
+
+		// Print Result Message
+		if (success) {
+			viewFormatter.printFormattedSuccessMessage("Item Added to Database!");
+		} else {
+			viewFormatter.printFormattedErrorMessage("Cannot Add Item to Database!");
 		}
 	}
 
-	// Print Formatted Table Divider
-	private void printFormattedTableDivider() {
+	private void editExistingItem() {
+		// Initialize Formatting Spacing
+		int spacing = 81;
 
-		// Initialize Divider with "+"
-		String divider = "+";
+		// Print the Formatted Header
+		System.out.println();
+		viewFormatter.printFormattedHeader("EDIT AN EXISTING ITEM", spacing);
 
-		// Hold the Width of Each Column
-		int[] columnWidths = { 6, 8, 28, 8, 8, 15 };
+		boolean itemFound = false;
+		int ID = -1;
 
-		// Generate "-" Characters for Each Column.
-		for (int width : columnWidths) {
-			divider += "-".repeat(width + 2) + "+";
+		// Loop Until a Valid Item ID is Found
+		while (!itemFound) {
+			// Get Item ID from User
+			ID = getItemByID();
+			if (controller.getItemByID(ID) != null) {
+				itemFound = true; // Valid Item Found
+			} else {
+				viewFormatter.printFormattedErrorMessage("Item NOT Found. Please Try Again!");
+			}
 		}
 
-		// Print Table Divider
-		System.out.println(divider);
+		// Prompt User to Edit the Item
+		Object[] results = getUpdatedItemData();
+		double price = (double) results[0];
+		int quantity = (int) results[1];
+
+		// Update the Item in the Controller
+		boolean success = controller.editExistingItem(ID, price, quantity);
+
+		// Print Result Message
+		if (success) {
+			viewFormatter.printFormattedSuccessMessage("Item Updated Successfully!");
+		} else {
+			viewFormatter.printFormattedErrorMessage("Failed to Update Item. Please Try Again!");
+		}
 	}
 
-	private String formatTextWithPadding(String text) {
-		int totalLength = 40; // Total length of the string (20 dashes + 20 dashes + text)
+	// Handle Edit Existing Item from Database
+	private int getItemByID() {
+		return viewHelper.validateIntegerInput("ID", "Enter Item's ID: ", 10000, 99999);
+	}
 
-		// Calculate spaces to center the text
-		int paddingLeft = (totalLength - text.length()) / 2;
-		int paddingRight = totalLength - text.length() - paddingLeft;
+	private Object[] getUpdatedItemData() {
+		double price = viewHelper.validateDoubleInput("Price", "Enter Item's New Price: $", 0.00, 100.00);
+		int quantity = viewHelper.validateIntegerInput("Quantity", "Enter Item's New Quantity: ", 0, 50);
 
-		// Format the string to add padding and center it
-		return " ".repeat(paddingLeft) + text + " ".repeat(paddingRight);
+		return new Object[] { price, quantity };
 	}
 
 }

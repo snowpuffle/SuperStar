@@ -42,7 +42,7 @@ public class ItemDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("ERROR: Cannot Get Items!");
+			// System.out.println("ERROR: Cannot Get Items!");
 		}
 
 		// Return List of Items
@@ -95,7 +95,7 @@ public class ItemDAO {
 			success = true;
 
 		} catch (SQLException e) {
-			System.out.println("ERROR: Cannot Add Item!");
+			// System.out.println("ERROR: Cannot Add Item!");
 		}
 		// Return Flag
 		return success;
