@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="@../../resources/stylesheets/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox prefHeight="500.0" prefWidth="750.0">
+			<children>
+				<AnchorPane prefHeight="100.0" styleClass="blue-background">
+					<children>
+						<ImageView fitHeight="60.0" fitWidth="60.0" layoutX="140.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../resources/images/icons/stars.png" />
+							</image>
+						</ImageView>
+						<Label layoutX="215.0" layoutY="18.0" styleClass="header-label" text="Main Dashboard" />
+						<Button fx:id="LogoutButton" layoutX="598.0" layoutY="26.0" mnemonicParsing="false" prefWidth="130.0" styleClass="yellow-background" text="Logout">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
+                           <image>
+                              <Image url="@../../resources/images/icons/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+					</children>
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+				</AnchorPane>
+				<HBox alignment="CENTER" prefHeight="400.0" styleClass="yellow-background">
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<padding>
+						<Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+					</padding>
+					<children>
+						<VBox layoutX="218.0" layoutY="30.0" prefWidth="300.0">
+							<styleClass>
+								<String fx:value="blue-background" />
+								<String fx:value="black-border" />
+								<String fx:value="rounded-border" />
+								<String fx:value="shadow" />
+							</styleClass>
+							<HBox.margin>
+								<Insets right="15.0" />
+							</HBox.margin>
+							<children>
+								<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+									<children>
+										<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../resources/images/grocery/strawberry.png" />
+											</image>
+											<HBox.margin>
+												<Insets right="5.0" />
+											</HBox.margin>
+										</ImageView>
+										<Label text="Items">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+											<font>
+												<Font name="Pangolin Regular" size="32.0" />
+											</font>
+										</Label>
+									</children>
+									<VBox.margin>
+										<Insets bottom="10.0" />
+									</VBox.margin>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="ViewItemsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="220.0" styleClass="light-yellow-background" text=" View All Items">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+											<graphic>
+												<ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+													<image>
+														<Image url="@../../resources/images/grocery/mango.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</Button>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER" layoutX="18.0" layoutY="68.0" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="AddItemButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="220.0" styleClass="light-yellow-background" text=" Add New Items">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+											<graphic>
+												<ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+													<image>
+														<Image url="@../../resources/images/grocery/donut.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</Button>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER" layoutX="18.0" layoutY="143.0" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="SearchItemButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="220.0" styleClass="light-yellow-background" text="Search for Items">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+											<graphic>
+												<ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+													<image>
+														<Image url="@../../resources/images/grocery/grape.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</Button>
+									</children>
+								</HBox>
+							</children>
+							<padding>
+								<Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+							</padding>
+						</VBox>
+						<VBox layoutX="218.0" layoutY="30.0" prefWidth="300.0">
+							<styleClass>
+								<String fx:value="blue-background" />
+								<String fx:value="black-border" />
+								<String fx:value="rounded-border" />
+                        <String fx:value="shadow" />
+							</styleClass>
+							<HBox.margin>
+								<Insets left="15.0" />
+							</HBox.margin>
+							<children>
+								<HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+									<children>
+										<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../resources/images/icons/star_coin.png" />
+											</image>
+											<HBox.margin>
+												<Insets right="5.0" />
+											</HBox.margin>
+										</ImageView>
+										<Label text="Transactions">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+											<font>
+												<Font name="Pangolin Regular" size="32.0" />
+											</font>
+										</Label>
+									</children>
+									<VBox.margin>
+										<Insets bottom="10.0" />
+									</VBox.margin>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="ViewTransactionsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="240.0" styleClass="light-yellow-background" text="View All Transactions">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/icons/billing.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+										</Button>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="AddTransactionButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="240.0" styleClass="light-yellow-background" text="Add New Transaction">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/icons/add.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+										</Button>
+									</children>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="90.0" prefWidth="200.0">
+									<children>
+										<Button fx:id="SearchTransactionButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="240.0" styleClass="light-yellow-background" text=" Search Transaction">
+											<HBox.margin>
+												<Insets left="5.0" />
+											</HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/images/icons/summary-check.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+										</Button>
+									</children>
+								</HBox>
+							</children>
+							<padding>
+								<Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+							</padding>
+						</VBox>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

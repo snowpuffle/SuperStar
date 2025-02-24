@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../../../resources/stylesheets/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox prefHeight="600.0" prefWidth="800.0">
+			<children>
+            <AnchorPane styleClass="blue-background">
+               <children>
+      				<HBox alignment="CENTER" layoutX="50.0" prefHeight="100.0" prefWidth="420.0" styleClass="dark-pink-background">
+      					<children>
+      						<ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+      							<HBox.margin>
+      								<Insets right="15.0" />
+      							</HBox.margin>
+      							<image>
+      								<Image url="@../../../resources/images/grocery/lemon.png" />
+      							</image>
+      						</ImageView>
+      						<Label styleClass="header-label" text=" View All Items">
+      							<HBox.margin>
+      								<Insets />
+      							</HBox.margin>
+      						</Label>
+      					</children>
+      				</HBox>
+                  <Button fx:id="GoBackButton" layoutX="573.0" layoutY="25.0" mnemonicParsing="false" prefHeight="50.0" styleClass="yellow-background" text="Back to Dashboard">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/images/icons/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+				<HBox prefHeight="500.0" styleClass="yellow-background">
+					<children>
+						<AnchorPane prefHeight="450.0" prefWidth="500.0">
+							<styleClass>
+								<String fx:value="card" />
+								<String fx:value="pink-background" />
+							</styleClass>
+							<children>
+								<TableView fx:id="TableOfItems" layoutX="15.0" layoutY="15.0" prefHeight="440.0" prefWidth="460.0" styleClass="blue-background">
+									<columns>
+										<TableColumn fx:id="ColumnID" editable="false" prefWidth="50.0" style="-fx-alignment: center;" text="ID" />
+										<TableColumn fx:id="ColumnName" editable="false" prefWidth="85.0" style="-fx-alignment: center;" text="Name" />
+										<TableColumn fx:id="ColumnType" editable="false" prefWidth="85.0" style="-fx-alignment: center;" text="Type" />
+                              <TableColumn fx:id="ColumnBrandName" editable="false" prefWidth="85.0" style="-fx-alignment: center;" text="Brand" />
+										<TableColumn fx:id="ColumnQuantity" editable="false" prefWidth="70.0" style="-fx-alignment: center;" text="Quantity" />
+										<TableColumn fx:id="ColumnPrice" editable="false" style="-fx-alignment: center;" text="Sale Price" />
+									</columns>
+								</TableView>
+							</children>
+							<HBox.margin>
+								<Insets right="15.0" />
+							</HBox.margin>
+						</AnchorPane>
+						<AnchorPane prefHeight="450.0" prefWidth="275.0">
+							<styleClass>
+								<String fx:value="card" />
+								<String fx:value="pink-background" />
+							</styleClass>
+							<children>
+								<VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="15.0" prefHeight="440.0" prefWidth="235.0">
+									<children>
+										<Label fx:id="NameField" alignment="CENTER" prefHeight="25.0" prefWidth="250.0" styleClass="title-label" text="Apple" />
+										<HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+											<children>
+												<Label alignment="CENTER" prefHeight="25.0" prefWidth="75.0" text="Item ID:" textAlignment="RIGHT">
+													<font>
+														<Font name="Pangolin Regular" size="16.0" />
+													</font>
+												</Label>
+												<Label fx:id="IDField" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="50.0" text="12345">
+													<font>
+														<Font name="Pangolin Regular" size="16.0" />
+													</font>
+												</Label>
+											</children>
+										</HBox>
+										<ImageView fx:id="ImageField" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../resources/images/grocery/apple.png" />
+											</image>
+											<VBox.margin>
+												<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+											</VBox.margin>
+										</ImageView>
+										<HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="100.0" text="Type:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="TypeField" prefWidth="150.0" text="Fruit">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="310.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="100.0" text="Price:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="PriceField" prefWidth="150.0" text="\$123.00">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="337.0" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Brand:">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="BrandNameField" prefWidth="150.0" text="Fresh Harvest">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="300.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefWidth="100.0" text="Quantity:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="QuantityField" prefWidth="150.0" text="10">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="297.0" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Organic:">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="isOrganicField" prefWidth="150.0" text="Yes">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </HBox>
+										<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefHeight="35.0" prefWidth="250.0">
+											<children>
+												<Label prefHeight="25.0" prefWidth="100.0" text="Expiration:">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+												<Label fx:id="ExpirationDateField" prefWidth="150.0" text="2025-01-01">
+													<font>
+														<Font name="Pangolin Regular" size="18.0" />
+													</font>
+												</Label>
+											</children>
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+										</HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="332.0" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label prefWidth="100.0" text="Status:">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="StatusField" prefWidth="150.0" text="Available">
+                                       <font>
+                                          <Font name="Pangolin Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </HBox>
+										<HBox alignment="CENTER" layoutX="10.0" layoutY="352.0" prefHeight="30.0" prefWidth="250.0">
+											<padding>
+												<Insets left="10.0" />
+											</padding>
+											<children>
+												<Button fx:id="EditItemButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="blue-background" text="Edit Item" />
+											</children>
+											<VBox.margin>
+												<Insets top="10.0" />
+											</VBox.margin>
+										</HBox>
+									</children>
+								</VBox>
+							</children>
+						</AnchorPane>
+					</children>
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<padding>
+						<Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+					</padding>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

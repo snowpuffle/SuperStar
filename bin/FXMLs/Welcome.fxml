@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="RootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="@../../resources/stylesheets/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="500.0" prefWidth="750.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="350.0" prefWidth="750.0" styleClass="yellow-background">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="375.0" prefWidth="750.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="90.0" prefWidth="750.0" styleClass="header-label" text="Welcome to SuperStar System!" textAlignment="CENTER">
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </Label>
+                        <ImageView fitHeight="150.0" fitWidth="750.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/superstar.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="150.0" prefWidth="750.0" styleClass="blue-background">
+               <children>
+                  <Label styleClass="title-label" text="Click Anywhere to Continue ..." textAlignment="CENTER" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

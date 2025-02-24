@@ -1,40 +1,41 @@
 package models.items;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 public class Item {
-
-	// Item Attributes
 	private int ID;
 	private double price;
-	private String name;
 	private String type;
+	private String name;
 	private int quantity;
+	private String brandName;
+	private boolean isOrganic;
+	private LocalDate expirationDate;
 	private String status;
-
-	public Item() {
-
-	}
+	private String imageURL;
 
 	// Default Class Constructor
-	public Item(int ID, double price, String name, String type, int quantity, String status) {
+	public Item(int ID, double price, String name, String type, int quantity, String brandName, boolean isOrganic,
+			LocalDate expirationDate, String status, String imageURL) {
 		this.ID = ID;
 		this.price = price;
 		this.name = name;
 		this.type = type;
 		this.quantity = quantity;
+		this.brandName = brandName;
+		this.isOrganic = isOrganic;
+		this.expirationDate = expirationDate;
 		this.status = status;
+		this.imageURL = imageURL;
 	}
 
-	// Getter & Setter Methods
+	// Getters and Setters
 	public int getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
 	public double getPrice() {
@@ -69,6 +70,30 @@ public class Item {
 		this.quantity = quantity;
 	}
 
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public boolean isOrganic() {
+		return isOrganic;
+	}
+
+	public void setOrganic(boolean isOrganic) {
+		this.isOrganic = isOrganic;
+	}
+
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -77,19 +102,20 @@ public class Item {
 		this.status = status;
 	}
 
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	// Override toString() to Display Item Details
 	@Override
 	public String toString() {
-		return "ID: " + this.ID + "\tPrice: " + this.price + "\tName: " + this.name + "\tType: " + this.type
-				+ "\tQuantity: " + this.quantity + "\tStatus: " + this.status;
+		return String.format(
+				"ID: %d | Name: %s | Type: %s | Price: $%.2f | Quantity: %d | Brand: %s | Organic: %s | Expiration: %s | Status: %s | Image: %s",
+				ID, name, type, price, quantity, brandName, (isOrganic ? "Yes" : "No"),
+				(expirationDate != null ? expirationDate.toString() : "N/A"), status, imageURL);
 	}
-
-	public enum ItemType {
-		FRUITS, VEGETABLES
-	}
-
-	public static List<String> getItemTypeOptions() {
-		// Convert Each ENUM Constant to its Name (string)
-		return Arrays.stream(ItemType.values()).map(Enum::name).collect(Collectors.toList());
-	}
-
 }

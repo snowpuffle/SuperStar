@@ -1,25 +1,16 @@
 package superstarsystem;
 
-import controller.Controller;
-import views.View;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import models.Model;
 
-// import superstarsystem.DBManager;
-
-public class Main {
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		Model.getInstance().getViewFactory().showWelcomeFrame();
+	}
 
 	public static void main(String[] args) {
-
-		try {
-			// Initialize Database Manager
-			DBManager dbManager = new DBManager();
-
-			// Initialize Controller
-			new Controller(dbManager);
-
-		} catch (Exception e) {
-			System.out.println("An error occurred while starting the Supermarket System:");
-			e.printStackTrace();
-		}
-
+		launch(args);
 	}
 }
