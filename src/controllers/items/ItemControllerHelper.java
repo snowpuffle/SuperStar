@@ -1,13 +1,21 @@
 package controllers.items;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Random;
 
-public class ItemControllerHelper {
-	private Random random;
+import javafx.scene.image.Image;
 
+public class ItemControllerHelper {
+
+	// Utility Attributes
+	private Random random;
+	private static final String IMAGE_FOLDER = System.getProperty("user.dir") + "\\resources\\images";
+	private static final String DEFAULT_IMAGE = "\\icons\\warning.png";
+
+	// Default Class Constructor
 	public ItemControllerHelper() {
 		this.random = new Random();
 	}
@@ -137,5 +145,35 @@ public class ItemControllerHelper {
 		} catch (DateTimeParseException e) {
 			return null; // Return Null if the Date is Invalid
 		}
+	}
+
+	// Get and Create Image
+	public Image getImage(String imageName) {
+		String imageURL = fixImage(imageName);
+		return new Image(new File(imageURL).toURI().toString());
+	}
+
+	// Fix ImageURL
+	public String fixImage(String image) {
+
+		// Initialize Empty Location
+		String imageLocation = "";
+
+		// Set Default Image if Null or Empty
+		if (image == null || image.trim().isEmpty()) {
+			return IMAGE_FOLDER + DEFAULT_IMAGE;
+		}
+
+		// Set Image Location
+		imageLocation = IMAGE_FOLDER + image;
+
+		// Check if File Exists
+		File file = new File(imageLocation);
+		if (!file.exists()) {
+			imageLocation = IMAGE_FOLDER + DEFAULT_IMAGE;
+		}
+
+		// Return Image Location
+		return imageLocation;
 	}
 }

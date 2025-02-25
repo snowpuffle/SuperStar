@@ -24,8 +24,6 @@ public class ViewItemsController implements Initializable {
 
 	// List of All Items
 	private List<Item> ListOfItems;
-	private static final String IMAGE_FOLDER = System.getProperty("user.dir") + "\\resources\\images";
-	private static final String DEFAULT_IMAGE = "\\icons\\warning.png";
 
 	// Attributes for Table of Items
 	public TableView<Item> TableOfItems;
@@ -52,9 +50,12 @@ public class ViewItemsController implements Initializable {
 	public Button GoBackButton;
 	public Button EditItemButton;
 
+	private ItemControllerHelper ItemControllerHelper;
+
 	// Initialize Method
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		this.ItemControllerHelper = new ItemControllerHelper();
 		initializeTable();
 		addListeners();
 	}
@@ -125,7 +126,7 @@ public class ViewItemsController implements Initializable {
 			String isOrganic = item.isOrganic() ? "Yes" : "No";
 			String expirationDate = getOrDefault(String.valueOf(item.getExpirationDate()), "N/A");
 			String status = getOrDefault(item.getStatus(), "Unknown");
-			Image image = getImage(item.getImageURL());
+			Image image = ItemControllerHelper.getImage(item.getImageURL());
 
 			// Update UI fields
 			IDField.setText(id);
@@ -148,36 +149,6 @@ public class ViewItemsController implements Initializable {
 	private String getPrice(double price) {
 		NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 		return price > 0 ? currencyFormat.format(price) : "N/A";
-	}
-
-	// Get and Create Image
-	private Image getImage(String imageName) {
-		String imageURL = fixImage(imageName);
-		return new Image(new File(imageURL).toURI().toString());
-	}
-
-	// Fix ImageURL
-	private String fixImage(String image) {
-
-		// Initialize Empty Location
-		String imageLocation = "";
-
-		// Set Default Image if Null or Empty
-		if (image == null || image.trim().isEmpty()) {
-			return IMAGE_FOLDER + DEFAULT_IMAGE;
-		}
-
-		// Set Image Location
-		imageLocation = IMAGE_FOLDER + image;
-
-		// Check if File Exists
-		File file = new File(imageLocation);
-		if (!file.exists()) {
-			imageLocation = IMAGE_FOLDER + DEFAULT_IMAGE;
-		}
-
-		// Return Image Location
-		return imageLocation;
 	}
 
 	// Get Default if Given Value is Null

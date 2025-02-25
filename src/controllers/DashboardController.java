@@ -32,7 +32,7 @@ public class DashboardController implements Initializable {
 	private void addListeners() {
 		ViewItemsButton.setOnAction(event -> handleViewItems());
 		AddItemButton.setOnAction(event -> handleAddItem());
-//		SearchItemButton.setOnAction(event -> handleSearchAnimal());
+		SearchItemButton.setOnAction(event -> handleSearchItem());
 //		ViewTransactionsButton.setOnAction(event -> handleViewProducts());
 //		AddTransactionButton.setOnAction(event -> handleAddProduct());
 //		SearchTransactionButton.setOnAction(event -> handleSearchProduct());
@@ -45,10 +45,16 @@ public class DashboardController implements Initializable {
 		Model.getInstance().getViewFactory().showViewItemsFrame();
 	}
 
-	// Event: "View All Items" Button is Clicked
+	// Event: "Add an Item" Button is Clicked
 	private void handleAddItem() {
 		closeCurrentWindow();
 		Model.getInstance().getViewFactory().showAddItemFrame();
+	}
+
+	// Event: "Search for an Item by ID" Button is Clicked
+	private void handleSearchItem() {
+		closeCurrentWindow();
+		Model.getInstance().getViewFactory().showSearchItemFrame();
 	}
 
 	// Generic: Close Current Window

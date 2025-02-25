@@ -35,7 +35,7 @@ public class Model {
 		ItemSeeds seeds = new ItemSeeds();
 
 		// Generate Seed Items
-		seeds.generateItems(10);
+		seeds.generateItems(25);
 
 		// Retrieve the List of Items from the ItemSeeds Object
 		List<Item> listOfItems = seeds.getRandomItemList();

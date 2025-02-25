@@ -18,7 +18,7 @@
 			<children>
 				<HBox alignment="CENTER" prefHeight="100.0" styleClass="yellow-background">
 					<children>
-						<ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+						<ImageView fx:id="ImageField" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
 							<HBox.margin>
 								<Insets right="15.0" />
 							</HBox.margin>
@@ -199,7 +199,7 @@
 												<Insets bottom="5.0" />
 											</VBox.margin>
 										</Label>
-										<TextField fx:id="ImageField" disable="true" editable="false" prefHeight="45.0" promptText="Image URL" styleClass="light-yellow-background" />
+										<TextField fx:id="ImageURLField" disable="true" editable="false" prefHeight="45.0" promptText="Image URL" styleClass="light-yellow-background" />
 									</children>
 									<HBox.margin>
 										<Insets left="30.0" />

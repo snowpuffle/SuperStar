@@ -49,6 +49,14 @@ public class ViewFactory {
 		createStage(fxmlLoader, "Edit Existing Item");
 	}
 
+	// Show Edit Item Window
+	public void showSearchItemFrame() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXMLs/items/SearchItem.fxml"));
+		SearchItemController SearchItemController = new SearchItemController();
+		fxmlLoader.setController(SearchItemController);
+		createStage(fxmlLoader, "Search for Item by ID");
+	}
+
 	// Generic: Create Stage
 	private void createStage(FXMLLoader fxmlLoader, String stageTitle) {
 		Scene scene = null;

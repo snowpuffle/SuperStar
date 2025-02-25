@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="@../../../resources/stylesheets/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<VBox prefHeight="500.0" prefWidth="750.0">
+			<children>
+				<AnchorPane prefHeight="100.0" prefWidth="750.0" styleClass="yellow-background">
+					<children>
+						<HBox alignment="CENTER" layoutY="1.0" prefHeight="100.0" prefWidth="750.0">
+							<children>
+								<ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../../../resources/images/icons/star.png" />
+									</image>
+									<HBox.margin>
+										<Insets right="5.0" />
+									</HBox.margin>
+								</ImageView>
+								<Label styleClass="header-label" text="Search for Item by ID">
+									<HBox.margin>
+										<Insets />
+									</HBox.margin>
+								</Label>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/images/icons/star.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+							</children>
+						</HBox>
+					</children>
+				</AnchorPane>
+				<VBox alignment="CENTER" prefHeight="500.0" prefWidth="100.0" styleClass="blue-background">
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<children>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="200.0" styleClass="title-label">
+                     <children>
+                        <Label fx:id="MessageLabel" text="Please Enter ID of Item!" />
+                     </children>
+                  </HBox>
+						<HBox alignment="CENTER" prefHeight="230.0" prefWidth="200.0">
+							<children>
+								<VBox alignment="CENTER_LEFT" prefWidth="225.0">
+									<children>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                                 <children>
+      										<Label styleClass="title-label" text="Enter Item ID:" />
+                                 </children>
+                              </HBox>
+										<TextField fx:id="IDField" promptText="Item ID: 12345" styleClass="pink-background" />
+									</children>
+								</VBox>
+							</children>
+							<padding>
+								<Insets left="30.0" right="30.0" />
+							</padding>
+						</HBox>
+						<HBox alignment="CENTER" layoutX="10.0" layoutY="190.0" prefHeight="100.0" prefWidth="200.0">
+							<children>
+								<Button fx:id="GoBackButton" mnemonicParsing="false" prefHeight="50.0" styleClass="yellow-background" text="Back to Dashboard">
+									<HBox.margin>
+										<Insets right="10.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+											<image>
+												<Image url="@../../../resources/images/icons/return.png" />
+											</image>
+										</ImageView>
+									</graphic>
+								</Button>
+								<Button fx:id="SubmitButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" styleClass="yellow-background" text="Submit!">
+									<graphic>
+										<ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
+											<image>
+												<Image url="@../../../resources/images/icons/check-mark.png" />
+											</image>
+										</ImageView>
+									</graphic>
+									<HBox.margin>
+										<Insets left="10.0" />
+									</HBox.margin>
+								</Button>
+							</children>
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+						</HBox>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

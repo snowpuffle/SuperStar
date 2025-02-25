@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Model;
@@ -26,10 +27,11 @@ public class EditItemController implements Initializable {
 	public TextField QuantityField;
 	public TextField BrandNameField;
 	public TextField ExpirationDateField;
-	public TextField ImageField;
+	public TextField ImageURLField;
 	public ComboBox<String> StatusField;
 	public ComboBox<String> TypeField;
 	public ComboBox<String> isOrganicField;
+	public ImageView ImageField;
 
 	// Utility Attributes
 	public Button SubmitButton;
@@ -44,10 +46,10 @@ public class EditItemController implements Initializable {
 	@Override
 	// Initialize Method
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		this.ItemControllerHelper = new ItemControllerHelper();
+
 		// Initialize Frame
 		initializeFrame();
-
-		this.ItemControllerHelper = new ItemControllerHelper();
 
 		// Initialize OnClick Action of Submit Button
 		SubmitButton.setOnAction(event -> handleEditItem());
@@ -60,7 +62,7 @@ public class EditItemController implements Initializable {
 		StatusField.getItems().addAll("AVAILABLE", "NOT AVAILABLE");
 		isOrganicField.getItems().addAll("YES", "NO");
 		TypeField.setEditable(false);
-		ImageField.setEditable(false);
+		ImageURLField.setEditable(false);
 	}
 
 	// Initialize All Fields for Existing Item
@@ -75,7 +77,8 @@ public class EditItemController implements Initializable {
 			isOrganicField.setValue(item.isOrganic() ? "YES" : "NO");
 			ExpirationDateField.setText(String.valueOf(item.getExpirationDate()));
 			StatusField.setValue(item.getStatus());
-			ImageField.setText(item.getImageURL());
+			ImageURLField.setText(item.getImageURL());
+			ImageField.setImage(ItemControllerHelper.getImage(item.getImageURL()));
 		}
 	}
 
