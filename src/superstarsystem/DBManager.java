@@ -32,9 +32,13 @@ public class DBManager {
 		// Connect to Database
 		connection = connectToDatabase(connection);
 
-		// Drop & Create Table
+		// Drop & Create Table for Items
 		dropTable(connection, "Items");
 		createTable(connection, "create_items.sql", "Items");
+
+		// Drop & Create Table for Transactions
+		dropTable(connection, "Transactions");
+		createTable(connection, "create_transactions.sql", "Transactions");
 
 	}
 

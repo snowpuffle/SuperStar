@@ -1,6 +1,5 @@
 package controllers.items;
 
-import java.io.File;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.List;
@@ -21,7 +20,6 @@ import models.Model;
 import models.items.Item;
 
 public class ViewItemsController implements Initializable {
-
 	// List of All Items
 	private List<Item> ListOfItems;
 
@@ -50,12 +48,16 @@ public class ViewItemsController implements Initializable {
 	public Button GoBackButton;
 	public Button EditItemButton;
 
+	// Controller Helper
 	private ItemControllerHelper ItemControllerHelper;
 
-	// Initialize Method
 	@Override
+	// Initialize Method
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		// Initialize Controller Helper
 		this.ItemControllerHelper = new ItemControllerHelper();
+
+		// Initialize Table & Add Listeners
 		initializeTable();
 		addListeners();
 	}
@@ -73,7 +75,6 @@ public class ViewItemsController implements Initializable {
 
 	// Initialize OnClick Actions for All Buttons
 	private void addListeners() {
-
 		// Set a Listener on Table View to Update Item Data When a Row is Selected
 		TableOfItems.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
@@ -88,7 +89,6 @@ public class ViewItemsController implements Initializable {
 
 	// Display Item Data to Table
 	public void displayItemData() {
-
 		// Attempt to Display Item Data to Table
 		try {
 			// Get List of Items by Accessing the Model
@@ -120,24 +120,24 @@ public class ViewItemsController implements Initializable {
 			String id = String.valueOf(item.getID());
 			String price = getPrice(item.getPrice());
 			String name = getOrDefault(item.getName(), "Unknown");
-			String type = getOrDefault(item.getType(), "Unknown");
+			Item.ItemType type = Item.ItemType.valueOf(getOrDefault(String.valueOf(item.getType()), "Unknown"));
 			String quantity = String.valueOf(item.getQuantity());
 			String brandName = getOrDefault(item.getBrandName(), "Unknown");
 			String isOrganic = item.isOrganic() ? "Yes" : "No";
 			String expirationDate = getOrDefault(String.valueOf(item.getExpirationDate()), "N/A");
-			String status = getOrDefault(item.getStatus(), "Unknown");
+			Item.ItemStatus status = Item.ItemStatus.valueOf(getOrDefault(String.valueOf(item.getStatus()), "Unknown"));
 			Image image = ItemControllerHelper.getImage(item.getImageURL());
 
 			// Update UI fields
 			IDField.setText(id);
 			PriceField.setText(price);
 			NameField.setText(name);
-			TypeField.setText(type);
+			TypeField.setText(String.valueOf(type));
 			QuantityField.setText(quantity);
 			BrandNameField.setText(brandName);
 			isOrganicField.setText(isOrganic);
 			ExpirationDateField.setText(expirationDate);
-			StatusField.setText(status);
+			StatusField.setText(String.valueOf(status));
 			ImageField.setImage(image);
 
 		} catch (Exception e) {

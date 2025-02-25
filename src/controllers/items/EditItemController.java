@@ -18,7 +18,6 @@ import models.items.Item;
 public class EditItemController implements Initializable {
 	// Item for THIS Controller
 	private Item item;
-	private ItemControllerHelper ItemControllerHelper;
 
 	// Main Attributes
 	public TextField IDField;
@@ -38,6 +37,9 @@ public class EditItemController implements Initializable {
 	public Button GoBackButton;
 	public Label MessageLabel;
 
+	// Controller Helper
+	private ItemControllerHelper ItemControllerHelper;
+
 	// Default Class Constructor
 	public EditItemController(Item item) {
 		this.item = item;
@@ -46,6 +48,7 @@ public class EditItemController implements Initializable {
 	@Override
 	// Initialize Method
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		// Initialize Controller Helper
 		this.ItemControllerHelper = new ItemControllerHelper();
 
 		// Initialize Frame
@@ -71,12 +74,12 @@ public class EditItemController implements Initializable {
 			IDField.setText(String.valueOf(item.getID()));
 			NameField.setText(item.getName());
 			PriceField.setText(String.valueOf(item.getPrice()));
-			TypeField.setValue(item.getType());
+			TypeField.setValue(String.valueOf(item.getType()));
 			QuantityField.setText(String.valueOf(item.getQuantity()));
 			BrandNameField.setText(item.getBrandName());
 			isOrganicField.setValue(item.isOrganic() ? "YES" : "NO");
 			ExpirationDateField.setText(String.valueOf(item.getExpirationDate()));
-			StatusField.setValue(item.getStatus());
+			StatusField.setValue(String.valueOf(item.getStatus()));
 			ImageURLField.setText(item.getImageURL());
 			ImageField.setImage(ItemControllerHelper.getImage(item.getImageURL()));
 		}
@@ -84,7 +87,6 @@ public class EditItemController implements Initializable {
 
 	// Event: "Submit" Button is Clicked
 	private void handleEditItem() {
-
 		// Get New TextField Values
 		String newPrice = PriceField.getText();
 		String newName = NameField.getText();
@@ -92,7 +94,7 @@ public class EditItemController implements Initializable {
 		String newBrandName = BrandNameField.getText();
 		String newIsOrganic = isOrganicField.getValue();
 		String newExpirationDate = ExpirationDateField.getText();
-		String newStatus = StatusField.getValue();
+		Item.ItemStatus newStatus = Item.ItemStatus.valueOf(StatusField.getValue());
 
 		// Validate the New Values
 		if (validateFields(newPrice, newName, newQuantity, newBrandName, newIsOrganic, newExpirationDate, newStatus)) {
@@ -104,7 +106,7 @@ public class EditItemController implements Initializable {
 
 	// Initialize Fields and Update Item to Database
 	private void editItem(String newPrice, String newName, String newQuantity, String newBrandName, String newIsOrganic,
-			String newExpirationDate, String newStatus) {
+			String newExpirationDate, Item.ItemStatus newStatus) {
 
 		// Convert String Values to Correct Types
 		double price = ItemControllerHelper.parseDouble(newPrice);
@@ -129,7 +131,7 @@ public class EditItemController implements Initializable {
 	}
 
 	// Validate All String Fields
-	private boolean validateStringFields(String name, String brandName, String status) {
+	private boolean validateStringFields(String name, String brandName, Item.ItemStatus status) {
 		// Initiate Flag
 		boolean validated = true;
 
@@ -140,7 +142,7 @@ public class EditItemController implements Initializable {
 		} else if (!ItemControllerHelper.validateString(brandName)) {
 			handleMessageLabel("Please Enter a Brand Name!", false);
 			validated = false;
-		} else if (!ItemControllerHelper.validateChoice(status)) {
+		} else if (!ItemControllerHelper.validateChoice(String.valueOf(status))) {
 			handleMessageLabel("Please Select a Status!", false);
 			validated = false;
 		}
@@ -150,7 +152,7 @@ public class EditItemController implements Initializable {
 
 	// Validate All Input Fields
 	private boolean validateFields(String priceString, String name, String quantityString, String brandName,
-			String isOrganicString, String expirationDateString, String status) {
+			String isOrganicString, String expirationDateString, Item.ItemStatus status) {
 
 		// Validate All Fields
 		if (!validateStringFields(name, brandName, status)) {

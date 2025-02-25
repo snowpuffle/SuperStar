@@ -5,18 +5,28 @@ import java.time.LocalDate;
 public class Item {
 	private int ID;
 	private double price;
-	private String type;
+	private ItemType type;
 	private String name;
 	private int quantity;
 	private String brandName;
 	private boolean isOrganic;
 	private LocalDate expirationDate;
-	private String status;
+	private ItemStatus status;
 	private String imageURL;
 
+	// Enum for Transaction Type
+	public enum ItemType {
+		FRUITS, VEGETABLES
+	}
+
+	// Enum for Payment Status
+	public enum ItemStatus {
+		AVAILABLE, UNAVAILABLE
+	}
+
 	// Default Class Constructor
-	public Item(int ID, double price, String name, String type, int quantity, String brandName, boolean isOrganic,
-			LocalDate expirationDate, String status, String imageURL) {
+	public Item(int ID, double price, String name, ItemType type, int quantity, String brandName, boolean isOrganic,
+			LocalDate expirationDate, ItemStatus status, String imageURL) {
 		this.ID = ID;
 		this.price = price;
 		this.name = name;
@@ -54,11 +64,11 @@ public class Item {
 		this.name = name;
 	}
 
-	public String getType() {
+	public ItemType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(ItemType type) {
 		this.type = type;
 	}
 
@@ -94,11 +104,11 @@ public class Item {
 		this.expirationDate = expirationDate;
 	}
 
-	public String getStatus() {
+	public ItemStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(ItemStatus status) {
 		this.status = status;
 	}
 

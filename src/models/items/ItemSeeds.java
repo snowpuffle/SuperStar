@@ -11,8 +11,6 @@ public class ItemSeeds {
 	private static Random random = new Random();
 
 	// Item Attributes
-	private static String[] TYPES = { "FRUITS", "VEGETABLES" };
-	private static final String[] STATUS = { "AVAILABLE", "NOT AVAILABLE" };
 	private static final String[] FRUIT_NAMES = { "Apple", "Banana", "Kiwi", "Orange", "Mango", "Watermelon",
 			"Strawberry", "Lemon", "Grapes" };
 	private static String[] VEGETABLE_NAMES = { "Beetroot", "Broccoli", "Cabbage", "Carrot", "Chard", "Corn",
@@ -69,13 +67,13 @@ public class ItemSeeds {
 			// Generate Random Attributes
 			int ID = generateID();
 			double price = generatePrice();
-			String type = generateType();
+			Item.ItemType type = generateType();
 			String name = generateName(type);
 			int quantity = generateQuantity();
 			String brandName = generateBrandName();
 			boolean isOrganic = random.nextBoolean();
 			LocalDate expirationDate = generateExpirationDate();
-			String status = generateStatus();
+			Item.ItemStatus status = generateStatus();
 			String imageURL = generateImageURL(type, name);
 
 			// Create & Initialize Item Object
@@ -102,16 +100,17 @@ public class ItemSeeds {
 	}
 
 	// Generate Random Type
-	private String generateType() {
-		return TYPES[random.nextInt(TYPES.length)];
+	private Item.ItemType generateType() {
+		Item.ItemType[] types = Item.ItemType.values();
+		return types[random.nextInt(types.length)];
 	}
 
 	// Generate Name based on Type
-	private String generateName(String type) {
+	private String generateName(Item.ItemType type) {
 		String name = "";
-		if ("FRUITS".equalsIgnoreCase(type)) {
+		if (Item.ItemType.FRUITS.equals(type)) {
 			name = FRUIT_NAMES[random.nextInt(FRUIT_NAMES.length)];
-		} else if ("VEGETABLES".equalsIgnoreCase(type)) {
+		} else if (Item.ItemType.VEGETABLES.equals(type)) {
 			name = VEGETABLE_NAMES[random.nextInt(VEGETABLE_NAMES.length)];
 		}
 		return name;
@@ -139,21 +138,21 @@ public class ItemSeeds {
 	}
 
 	// Generate Random Status
-	private String generateStatus() {
-		return STATUS[random.nextInt(STATUS.length)];
+	private Item.ItemStatus generateStatus() {
+		Item.ItemStatus[] statuses = Item.ItemStatus.values();
+		return statuses[random.nextInt(statuses.length)];
 	}
 
 	// Generate ImageURL Based on Name
-	private String generateImageURL(String type, String name) {
-
+	private String generateImageURL(Item.ItemType type, String name) {
 		// Initialize Empty Location
 		String imageURL = "";
 
 		// Set ImageURL based on Name & Type
-		if ("FRUITS".equalsIgnoreCase(type)) {
+		if (Item.ItemType.FRUITS.equals(type)) {
 			imageURL = FRUIT_IMAGES.getOrDefault(name, "\\icons\\warning.png");
 			imageURL = "\\fruits\\" + imageURL;
-		} else if ("VEGETABLES".equalsIgnoreCase(type)) {
+		} else if (Item.ItemType.VEGETABLES.equals(type)) {
 			imageURL = VEGETABLE_IMAGES.getOrDefault(name, "\\icons\\warning.png");
 			imageURL = "\\vegetables\\" + imageURL;
 		} else {

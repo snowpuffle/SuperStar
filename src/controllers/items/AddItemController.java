@@ -15,9 +15,6 @@ import models.Model;
 import models.items.Item;
 
 public class AddItemController implements Initializable {
-
-	private ItemControllerHelper ItemControllerHelper;
-
 	// Main Attributes
 	public TextField IDField;
 	public TextField NameField;
@@ -35,13 +32,17 @@ public class AddItemController implements Initializable {
 	public Button GoBackButton;
 	public Label MessageLabel;
 
+	// Controller Helper
+	private ItemControllerHelper ItemControllerHelper;
+
 	@Override
 	// Initialize Method
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		// Initialize Controller Helper
+		this.ItemControllerHelper = new ItemControllerHelper();
+
 		// Initialize Frame
 		initializeFrame();
-
-		this.ItemControllerHelper = new ItemControllerHelper();
 
 		// Initialize OnClick Action of Submit Button
 		SubmitButton.setOnAction(event -> handleAddItem());
@@ -60,13 +61,13 @@ public class AddItemController implements Initializable {
 	private void handleAddItem() {
 		// Get TextField Values
 		String price = PriceField.getText();
-		String type = TypeField.getValue();
+		Item.ItemType type = Item.ItemType.valueOf(TypeField.getValue());
 		String name = NameField.getText();
 		String quantity = QuantityField.getText();
 		String brandName = BrandNameField.getText();
 		String isOrganic = isOrganicField.getValue();
 		String expirationDate = ExpirationDateField.getText();
-		String status = StatusField.getValue();
+		Item.ItemStatus status = Item.ItemStatus.valueOf(StatusField.getValue());
 		String imageURL = ImageField.getText();
 
 		// Continue to Add Item ONLY if Fields are ALL Validated
@@ -76,8 +77,8 @@ public class AddItemController implements Initializable {
 	}
 
 	// Initialize Fields and Add Item to Database
-	private void addItem(String priceString, String type, String name, String quantityString, String brandName,
-			String isOrganicString, String expirationDateString, String status, String imageURL) {
+	private void addItem(String priceString, Item.ItemType type, String name, String quantityString, String brandName,
+			String isOrganicString, String expirationDateString, Item.ItemStatus status, String imageURL) {
 
 		// Initialize Non-String Fields
 		int ID = ItemControllerHelper.generateRandomID();
@@ -97,7 +98,8 @@ public class AddItemController implements Initializable {
 	}
 
 	// Validate All String Fields
-	private boolean validateStringFields(String type, String name, String brandName, String status, String imageURL) {
+	private boolean validateStringFields(Item.ItemType type, String name, String brandName, Item.ItemStatus status,
+			String imageURL) {
 		// Initiate Flag
 		boolean validated = true;
 
@@ -108,10 +110,10 @@ public class AddItemController implements Initializable {
 		} else if (!ItemControllerHelper.validateString(brandName)) {
 			handleMessageLabel("Please Enter a Brand Name!", false);
 			validated = false;
-		} else if (!ItemControllerHelper.validateChoice(status)) {
+		} else if (!ItemControllerHelper.validateChoice(String.valueOf(status))) {
 			handleMessageLabel("Please Select a Status!", false);
 			validated = false;
-		} else if (!ItemControllerHelper.validateChoice(type)) {
+		} else if (!ItemControllerHelper.validateChoice(String.valueOf(type))) {
 			handleMessageLabel("Please Select a Type!", false);
 			validated = false;
 		} else if (!ItemControllerHelper.validateString(imageURL)) {
@@ -123,8 +125,9 @@ public class AddItemController implements Initializable {
 	}
 
 	// Validate All Input Fields
-	private boolean validateFields(String priceString, String type, String name, String quantityString,
-			String brandName, String isOrganicString, String expirationDateString, String status, String imageURL) {
+	private boolean validateFields(String priceString, Item.ItemType type, String name, String quantityString,
+			String brandName, String isOrganicString, String expirationDateString, Item.ItemStatus status,
+			String imageURL) {
 
 		// Validate All Fields
 		if (!validateStringFields(type, name, brandName, status, imageURL)) {

@@ -93,12 +93,12 @@ public class ItemDAO {
 			statement.setInt(1, item.getID());
 			statement.setDouble(2, item.getPrice());
 			statement.setString(3, item.getName());
-			statement.setString(4, item.getType());
+			statement.setString(4, String.valueOf(item.getType()));
 			statement.setInt(5, item.getQuantity());
 			statement.setString(6, item.getBrandName());
 			statement.setBoolean(7, item.isOrganic());
 			statement.setDate(8, item.getExpirationDate() != null ? Date.valueOf(item.getExpirationDate()) : null);
-			statement.setString(9, item.getStatus());
+			statement.setString(9, String.valueOf(item.getStatus()));
 			statement.setString(10, item.getImageURL());
 
 			// Execute Statement
@@ -127,7 +127,7 @@ public class ItemDAO {
 			statement.setString(4, item.getBrandName());
 			statement.setBoolean(5, item.isOrganic());
 			statement.setDate(6, item.getExpirationDate() != null ? Date.valueOf(item.getExpirationDate()) : null);
-			statement.setString(7, item.getStatus());
+			statement.setString(7, String.valueOf(item.getStatus()));
 			statement.setInt(8, item.getID());
 
 			// Execute Statement & Handle Results
@@ -179,14 +179,14 @@ public class ItemDAO {
 			// Extract Item Attributes from ResultSet
 			int ID = results.getInt("ID");
 			double price = results.getDouble("Price");
-			String type = results.getString("Type");
+			Item.ItemType type = Item.ItemType.valueOf(results.getString("Type"));
 			String name = results.getString("Name");
 			int quantity = results.getInt("Quantity");
 			String brandName = results.getString("BrandName");
 			boolean isOrganic = results.getBoolean("isOrganic");
 			Date expirationDateSQL = results.getDate("ExpirationDate");
 			LocalDate expirationDate = (expirationDateSQL != null) ? expirationDateSQL.toLocalDate() : null;
-			String status = results.getString("Status");
+			Item.ItemStatus status = Item.ItemStatus.valueOf(results.getString("Status"));
 			String imageURL = results.getString("ImageURL");
 
 			// Create a New Item Object

@@ -21,6 +21,7 @@ public class SearchItemController implements Initializable {
 	public Button GoBackButton;
 	public Button SubmitButton;
 
+	// Controller Helper
 	private ItemControllerHelper ItemControllerHelper;
 
 	@Override
@@ -31,15 +32,16 @@ public class SearchItemController implements Initializable {
 
 	// Initialize OnClick Actions for All Buttons
 	private void addListeners() {
+		// Initialize Controller Helper
 		this.ItemControllerHelper = new ItemControllerHelper();
 
+		// Initialize OnClick Action of Submit Button
 		GoBackButton.setOnAction(event -> handleGoBack());
 		SubmitButton.setOnAction(event -> handleSearchItem());
 	}
 
 	// Event: "Submit" Button is Clicked
 	private void handleSearchItem() {
-
 		// Get ID TextField Value
 		String stringID = IDField.getText();
 
